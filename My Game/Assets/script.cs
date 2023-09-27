@@ -6,17 +6,20 @@ public class script : MonoBehaviour
 {
     public Rigidbody2D rb;
 
+    public GameObject bullet;
     [SerializeField] public float upForce = 100;
     [SerializeField] public float speed = 1500;
     [SerializeField] public float runSpeed = 2500;
+    [SerializeField] public float bulletSpeed = 3000000000;
 
+    public KeyCode Key_code = KeyCode.F;
     public bool isGrounded = false;
-    // Start is called before the first frame update
+    public bool key = false;
+    // Start is called before the first frame upate
     void Start()
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -29,17 +32,28 @@ public class script : MonoBehaviour
             rb.AddForce(Vector2.up * upForce);
             isGrounded = false;
         }
+
+        if (Input.GetKeyDown(Key_code))
+        {
+            Instantiate(bullet, transform.position, Quaternion.identity);
+        }
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         isGrounded = true;
-    }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag != "Enemy")
-        {
-            return;
+
+        switch(collision.gameObject.tag) {
+            case "Przeszkoda":
+                if (!key) return;
+                collision.gameObject.SetActive(false);
+                break;
+            case "Key":
+                collision.gameObject.SetActive(false);
+                key = true;
+                break;
         }
+
     }
 }
