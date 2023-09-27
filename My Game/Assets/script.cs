@@ -7,14 +7,17 @@ public class script : MonoBehaviour
     public Rigidbody2D rb;
 
     public GameObject bullet;
+    [SerializeField] GameObject gunObject;
     [SerializeField] public float upForce = 100;
     [SerializeField] public float speed = 1500;
     [SerializeField] public float runSpeed = 2500;
-    [SerializeField] public float bulletSpeed = 3000000000;
+    [SerializeField] public float bulletSpeed = 20;
 
     public KeyCode Key_code = KeyCode.F;
     public bool isGrounded = false;
     public bool key = false;
+    private Transform trans;
+
     // Start is called before the first frame upate
     void Start()
     {
@@ -35,7 +38,8 @@ public class script : MonoBehaviour
 
         if (Input.GetKeyDown(Key_code))
         {
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            trans = gunObject.transform;
+            Instantiate(bullet, trans.position, Quaternion.identity);
         }
     }
 
@@ -47,10 +51,10 @@ public class script : MonoBehaviour
         switch(collision.gameObject.tag) {
             case "Przeszkoda":
                 if (!key) return;
-                collision.gameObject.SetActive(false);
+                Destroy(collision.gameObject);
                 break;
             case "Key":
-                collision.gameObject.SetActive(false);
+                Destroy(collision.gameObject);
                 key = true;
                 break;
         }

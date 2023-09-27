@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float bulletSpeed = 2.0f;
-    // Start is called before the first frame update
+
     void Start()
     {
-        rb.AddForce(bulletSpeed * new Vector2(10, 5));
+        rb.AddForce(bulletSpeed * new Vector2(5, 0));
     }
 
-    // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) return;
-        this.gameObject.SetActive(false);
+       
+        if (collision.gameObject.CompareTag("ObsticlesBullet")) {
+            Destroy(collision.gameObject);
+        }
+        Destroy(this.gameObject);
+
     }
 }
