@@ -18,12 +18,6 @@ public class script : MonoBehaviour
     public bool key = false;
     private Transform trans;
 
-    // Start is called before the first frame upate
-    void Start()
-    {
-        
-    }
-    // Update is called once per frame
     void Update()
     {
         rb.velocity = new Vector2(
